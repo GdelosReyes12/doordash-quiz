@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Door Dash Quiz 🚪</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- LOBBY SCREEN -->
+  <div id="screen-lobby" class="screen active">
+    <div class="cozy-bg"></div>
+    <div class="lobby-center">
+      <div class="pixel-title">🚪 DOOR DASH QUIZ 🚪</div>
+      <div class="pixel-sub">~ multiplayer study adventure ~</div>
+
+      <div class="card" id="panel-start">
+        <div class="avatar-pick">
+          <div class="label-sm">YOUR AVATAR</div>
+          <div class="avatar-row" id="avatar-row"></div>
+        </div>
+        <div class="input-row">
+          <label class="label-sm">NAME</label>
+          <input id="player-name" class="pix-input" maxlength="12" placeholder="ENTER NAME" value="PLAYER1" />
+        </div>
+        <div class="btn-row">
+          <button class="pix-btn gold" onclick="createLobby()">CREATE LOBBY</button>
+          <button class="pix-btn blue" onclick="showJoin()">JOIN LOBBY</button>
+        </div>
+      </div>
+
+      <div class="card hidden" id="panel-join">
+        <div class="label-sm">LOBBY CODE</div>
+        <input id="join-code" class="pix-input big-code" maxlength="5" placeholder="XXXXX" oninput="this.value=this.value.toUpperCase()" />
+        <div class="btn-row">
+          <button class="pix-btn blue" onclick="joinLobby()">JOIN!</button>
+          <button class="pix-btn gray" onclick="hideJoin()">BACK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WAITING ROOM -->
+  <div id="screen-waiting" class="screen">
+    <div class="cozy-bg"></div>
+    <div class="waiting-layout">
+      <div class="waiting-header">
+        <div class="pixel-title sm">LOBBY: <span id="lobby-code-display" class="gold-text"></span></div>
+        <div class="pixel-sub">Share this code with friends!</div>
+      </div>
+
+      <div class="waiting-split">
+        <div class="card">
+          <div class="label-sm">PLAYERS (<span id="player-count">0</span>)</div>
+          <div id="player-list"></div>
+        </div>
+
+        <div class="card" id="host-panel">
+          <div class="label-sm">QUIZ SETUP (HOST)</div>
+          <div class="upload-zone" id="upload-zone" onclick="document.getElementById('pdf-input').click()">
+            <div style="font-size:32px">📄</div>
+            <div class="upload-text">CLICK TO UPLOAD PDF</div>
+            <div class="upload-hint">AI generates your questions!</div>
+          </div>
+          <input type="file" id="pdf-input" accept=".pdf,.txt" class="hidden" />
+          <div id="upload-status" class="status-msg"></div>
+          <button class="pix-btn gray sm" onclick="useSample()">USE SAMPLE QUIZ</button>
+          <button class="pix-btn gold" id="start-btn" onclick="startGame()" style="margin-top:12px" disabled>▶ START GAME</button>
+        </div>
+
+        <div class="card hidden" id="guest-panel">
+          <div class="label-sm">WAITING FOR HOST</div>
+          <div class="waiting-animation">
+            <div class="door-anim">🚪</div>
+            <div class="pixel-sub sm" id="quiz-status">Waiting for quiz to load...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="screen-game" class="screen">
+    <canvas id="game-canvas"></canvas>
+    <div id="game-ui">
+      <div id="hud-top">
+        <div id="question-box">
+          <div id="q-counter">Q 1/10</div>
+          <div id="question-text">Loading...</div>
+        </div>
+        <div id="timer-wrap">
+          <div id="timer-bar-bg"><div id="timer-bar"></div></div>
+          <div id="timer-num">15</div>
+        </div>
+      </div>
+      <div id="scoreboard-mini" class="hidden">
+        <div id="score-rows"></div>
+      </div>
+    </div>
+    <div id="feedback-layer" class="hidden">
+      <div id="confetti-container"></div>
+      <div id="poop-container"></div>
+      <div id="feedback-msg"></div>
+    </div>
+  </div>
+
+  <!-- PODIUM SCREEN -->
+  <div id="screen-podium" class="screen">
+    <div class="podium-bg"></div>
+    <div id="podium-scene">
+      <div class="podium-title">🏆 FINAL RESULTS 🏆</div>
+      <div id="podium-stage">
+        <!-- Built by JS -->
+      </div>
+      <div id="all-scores"></div>
+      <button class="pix-btn gold" onclick="backToLobby()">PLAY AGAIN</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="/js/game.js"></script>
+</body>
+</html>
